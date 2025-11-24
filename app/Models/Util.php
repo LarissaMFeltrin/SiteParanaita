@@ -899,11 +899,17 @@ class Util
 
     public static function getGoogleMaps($aEndereco, $aBairro = null, $aCidade = null)
     {
-        $aGMapsKey = 'AIzaSyCzzpAmpJVILlF4WlrVS0k5_EjR57EQ6NI';
+       /* $aGMapsKey = 'AIzaSyCzzpAmpJVILlF4WlrVS0k5_EjR57EQ6NI';
 
         $aEmbed = $aEndereco.'-'.$aBairro.'-'.$aCidade;
         $aLink = '?q=' .Util::getStringUTF8Link($aEmbed, false). '&key='.$aGMapsKey;
-        return 'https://www.google.com/maps/embed/v1/place' .$aLink;
+        return 'https://www.google.com/maps/embed/v1/place' .$aLink;*/
+        
+        // Monta a consulta do endereço e utiliza o embed público do Google Maps
+        // que não exige API key (q=<endereco>&output=embed)
+        $aEmbed = trim($aEndereco.' '.$aBairro.' '.$aCidade);
+        $aLink = '?q=' . Util::getStringUTF8Link($aEmbed, false) . '&output=embed';
+        return 'https://www.google.com/maps' . $aLink;
     }
 
     public static function getStringUTF8Link($aTexto, $reverso = false)
