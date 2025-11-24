@@ -19,12 +19,12 @@
 <script type="text/javascript">
     $(function () {
         $('#myButton').floatingWhatsApp({
-            phone: '5544988117771',
+            phone: '5544999765500',
             popupMessage: 'Tem alguma dúvida, gostaria de mais informações?',
             message: "Sim",
             showPopup: true,
             showOnIE: true,
-            headerTitle: 'Sistemas Cordon',
+            headerTitle: 'Imobiliária Paranaíta',
             headerColor: '#25D366',
             backgroundColor: '#075e54',
             buttonImage: `<img src="{{ asset('images/whatsapp.png') }}" />`
