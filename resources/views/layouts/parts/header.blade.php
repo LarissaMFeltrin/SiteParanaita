@@ -3,7 +3,7 @@
 
       <!--<h1 class="logo"><a href="index.html">Dewi</a></h1>-->
         <a href="{{ route('index') }}" class="logo">
-          <img src="{{ asset('images/Logoimobiliariacompleto.png') }}" alt="" class="img-fluid">
+          <img src="{{ asset('images/Logoimobiliariacompleto2.png') }}" alt="" class="img-fluid">
         </a>
 
       <nav id="navbar" class="navbar">
@@ -36,7 +36,7 @@
                 <a class="getstarted scrollto" href="#">
                     <i class="bi bi-telephone-fill"></i>
                     &nbsp;
-                    (44) 3028-4949 / (44) 9 8811-7771
+                    (44) 99854-3797 / (44)  99976-5500
                 </a>
             </li>
         </ul>

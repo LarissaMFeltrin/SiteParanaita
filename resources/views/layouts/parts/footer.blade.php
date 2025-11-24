@@ -10,15 +10,17 @@
                 target="_"
                 style="color: #fff;">
                 <p style="padding: 10px">
+                  <!--
                     R. Santos Dumont, 2166 - Zona 03 <br>
                     Maringá - PR <br>
                     87050-100
+                    -->
                 </a>
                 <br>
-                <strong>CRECI 0000 </strong> <br>
-                <a href="tel:4430284949" target="_" style="color: #fff"><strong>Telefone:</strong> (44) 3028-4949</a> <br>
-                <a href="https://api.whatsapp.com/send?phone=5544988117771" target="_" style="color: #fff"><strong>Whatsapp:</strong>(44) 9 8811-7771</a> <br>
-                <a href="mailto:contato@imobiliariavaleverde.com.br" target="_" style="color: #fff"><strong>Email:</strong> contato@imobiliariavaleverde.com.br<br></a>
+                <strong>CRECI J9453 </strong> <br>
+                <a href="tel:44998543797" target="_" style="color: #fff"><strong>Telefone:</strong> (44) 9 9854-3797</a> <br>
+                <a href="https://api.whatsapp.com/send?phone=5544999765500" target="_" style="color: #fff"><strong>Whatsapp:</strong> (44) 9 9976-5500</a> <br>
+                <a href="mailto:contato@imobiliariavaleverde.com.br" target="_" style="color: #fff"><strong>Email:</strong> imobiliariaparanaita@gmail.com<br></a>
               </p>
             </div>
           </div>
@@ -60,7 +62,7 @@
 
     <div class="container">
       <div class="copyright">
-        &copy; Copyright <strong><span>Imobiliária Demo</span></strong>. Todos os direitos reservados.
+        &copy; Copyright <strong><span>Imobiliária Paranaíta LTDA</span></strong>. Todos os direitos reservados.
       </div>
       <div class="credits">
         Desenvolvido por <a href="https://scordon.com.br/" target="_">Sistemas Cordon</a>

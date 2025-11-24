@@ -94,7 +94,7 @@
                 </div>
             </div>
             <div class="col-sm-12 col-md-3">
-                <h5 class="text-center border p-1" style="background-color: #FCB900; color: #fff">
+                <h5 class="text-center border p-1" style="background-color: #fc0004; color: #fff">
                     Busca Rápida - Venda
                 </h5>
                 <ul class="categoria">
@@ -104,7 +104,7 @@
                         </li>
                     @endforeach
                 </ul>
-                <h5 class="text-center border p-1" style="background-color: #FCB900; color: #fff">
+                <h5 class="text-center border p-1" style="background-color: #fc0004; color: #fff">
                     Busca Rápida - Locação
                 </h5>
                 <ul class="categoria">
@@ -141,7 +141,7 @@
 @section('style')
 <style>
 #header{
-    background-image: url("{{ asset('images/banner_00.png') }}");
+    background-image: url("{{ asset('images/cidademarialva5.jpeg') }}");
     background-repeat: no-repeat, repeat;
     background-size: 100%;
     background-attachment: fixed;

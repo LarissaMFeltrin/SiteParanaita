@@ -6,7 +6,7 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
     @include('layouts.parts.description')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>Imobiliária Demo | CdAdm Web | Maringá - Paraná</title>
+    <title>Imobiliária Paranaíta | Marialva - PR</title>
     <!-- ======= styles ======= -->
     @include('layouts.parts.styles')
     <!-- End styles -->
