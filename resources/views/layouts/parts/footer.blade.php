@@ -5,7 +5,7 @@
         <div class="row p-3">
           <div class="col-lg-4 col-md-6">
             <div class="footer-info">
-                <img src="{{ asset('images/Logoimobiliariacompleto.png') }}" alt="" class="img-fluid" style="max-width: 180px">
+                <img src="{{ asset('images/LogoImobCCreci.png') }}" alt="" class="img-fluid" style="max-width: 180px">
                 <a href="https://goo.gl/maps/WgcAi1HnHXeurZEA6"
                 target="_"
                 style="color: #fff;">
@@ -18,7 +18,7 @@
                 </a>
                 <br>
                 <strong>CRECI J9453 </strong> <br>
-                <a href="tel:44998543797" target="_" style="color: #fff"><strong>Telefone:</strong> (44) 9 9854-3797</a> <br>
+                <!-- <a href="tel:44998543797" target="_" style="color: #fff"><strong>Telefone:</strong> (44) 9 9854-3797</a> <br> -->
                 <a href="https://api.whatsapp.com/send?phone=5544999765500" target="_" style="color: #fff"><strong>Whatsapp:</strong> (44) 9 9976-5500</a> <br>
                 <a href="mailto:contato@imobiliariavaleverde.com.br" target="_" style="color: #fff"><strong>Email:</strong> imobiliariaparanaita@gmail.com<br></a>
               </p>
@@ -42,12 +42,12 @@
 
           <div class="col-lg-3 col-md-6">
               <div class="social-links mt-3">
-                <a href="https://pt-br.facebook.com/sistemascordon" target="_" class="facebook" title="Facebook">
+               <!-- <a href="https://pt-br.facebook.com/sistemascordon" target="_" class="facebook" title="Facebook">
                     <img src="{{ asset('images/facebook.png') }}" alt="" class="img-fluid" style="max-width: 20px">
                 </a>
                 <a href="https://www.instagram.com/sistemascordon/" target="_" class="instagram" title="Instagram">
                     <img src="{{ asset('images/instagram.png') }}" alt="" class="img-fluid" style="max-width: 20px">
-                </a>
+                </a>-->
                 <!--
                 <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
                 <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>

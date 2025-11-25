@@ -219,7 +219,7 @@
 <link href="https://cdn.rawgit.com/sachinchoolur/lightgallery.js/master/dist/css/lightgallery.css" rel="stylesheet">
 <style>
 #header{
-    background-image: url("{{ asset('images/cidademarialva5.jpeg') }}");
+    background-image: url("{{ asset('images/carrosel/carrosel2.jpeg') }}");
     background-repeat: no-repeat, repeat;
     background-size: 100%;
     background-attachment: fixed;

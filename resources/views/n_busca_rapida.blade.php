@@ -73,7 +73,7 @@ use App\Models\Util;
 @section('style')
 <style>
 #header{
-    background-image: url("{{ asset('images/cidademarialva5.jpeg') }}");
+    background-image: url("{{ asset('images/carrosel/carrosel2.jpeg') }}");
     background-repeat: no-repeat, repeat;
     background-size: 100%;
     background-attachment: fixed;

@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row texto mb-5">
             <div class="col-12">
-                <h1>Soluções Imobiliárias de Vanguarda há 30 Anos: Seu Negócio, Nossa Tecnologia!</h1>
+                <h1>O seu imóvel está aqui...</h1>
             </div>
         </div>
         <form action="{{ route('busca.avancada') }}" method="GET" name="form-busca" id="form-busca">
