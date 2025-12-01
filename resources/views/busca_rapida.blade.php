@@ -35,7 +35,7 @@ use App\Models\Util;
                         <div class="col-sm-12 col-md-5 text-center" style="display: flex; align-items: center; justify-content: center;">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <a href="{{ route('imovel', ['descricao' => $imv['url_amigavel'], 'id' => $imv['cod_bem']]) }}">
+                                    <a href="{{ url('/imovel/' . $imv['url_amigavel'] . '/' . $imv['cod_bem']) }}">
                                         <img src="{{ $imv['img'] }}" class="img-fluid" alt="" style="max-height: 290px;">
                                     </a>
                                 </div>
@@ -104,7 +104,7 @@ use App\Models\Util;
                                 <div class="col-12 mt-3">
                                     <div class="row">
                                         <div class="d-grid gap-2 text-center">
-                                            <a href="{{ route('imovel', ['descricao' => $imv['url_amigavel'], 'id' => $imv['cod_bem']]) }}" class="btn btn-dark">
+                                            <a href="{{ url('/imovel/' . $imv['url_amigavel'] . '/' . $imv['cod_bem']) }}" class="btn btn-dark">
                                                 <i class="fas fa-search fa-fw"></i>
                                                 Ver detalhes do imóvel</a>
                                             <a href="{{ $imv['whatsapp'] }}" target="_" class="btn btn-success"> <i class="bi bi-whatsapp"></i> Whatsapp</a>

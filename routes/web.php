@@ -23,7 +23,7 @@ Route::get('/locacao', [SiteController::class, 'locacao'])->name('locacao');
 Route::get('/busca_rapida', [SiteController::class, 'busca_rapida'])->name('busca.rapida');
 Route::get('/busca_avancada', [SiteController::class, 'busca_avancada'])->name('busca.avancada');
 
-Route::get('/imovel/{descricao}/{id}', [SiteController::class, 'imovel'])->name('imovel');
+Route::get('/imovel/{any}', [SiteController::class, 'imovelPath'])->where('any', '.*')->name('imovel');
 
 Route::prefix('busca')->group(function () {
     Route::post('busca-tipo',   [BuscaController::class, 'getBuscaTipo'])->name('busca.tipo');

@@ -15,8 +15,8 @@ class SiteController extends Controller
 {
     public function index()
     {
-        $imoveis_venda = Imovel::where('id_imob', '=', '73')->where('finalidade', '=', 'Venda')->limit(10)->get();
-        $imoveis_locacao = Imovel::where('id_imob', '=', '73')->where('finalidade', '=', 'Locacao')->inRandomOrder()->limit(10)->get();
+        $imoveis_venda = Imovel::where('id_imob', '=', '1060')->where('finalidade', '=', 'Venda')->limit(10)->get();
+        $imoveis_locacao = Imovel::where('id_imob', '=', '1060')->where('finalidade', '=', 'Locacao')->inRandomOrder()->limit(10)->get();
 
         $a_destaque_locacao = $this->getRetorno($imoveis_locacao);
         $a_destaque_venda   = $this->getRetorno($imoveis_venda);
@@ -161,11 +161,11 @@ class SiteController extends Controller
         if(isset($busca['referencia'])){
 
             if(is_numeric($busca['referencia'])){
-                $imovel = Imovel::where('id_imob', '=', '73')
+                $imovel = Imovel::where('id_imob', '=', '1060')
                 ->where('id', 'LIKE', '%' . $busca['referencia'] . '%')
                 ->paginate(10);
             }else{
-                $imovel = Imovel::where('id_imob', '=', '73')
+                $imovel = Imovel::where('id_imob', '=', '1060')
                 ->where('tp_bem', 'LIKE', '%' . $busca['referencia'] . '%')
                 ->paginate(10);
             }
@@ -225,9 +225,43 @@ class SiteController extends Controller
         return view('busca_rapida', compact('imovel', 'imoveis', 'tp_bem_venda', 'tp_bem_locacao', 'busca'));
     }
 
-    public function imovel($descricao, $id)
+    public function imovelPath($path = null)
+    {
+        // Sempre extrai do Request para garantir que funciona em qualquer situação
+        $request = request();
+        $fullPath = trim(parse_url($request->getRequestUri(), PHP_URL_PATH), '/');
+        
+        // Se recebeu path como parâmetro, usa ele, senão extrai da URL completa
+        if ($path !== null) {
+            $fullPath = 'imovel/' . $path;
+        }
+        
+        // Remove 'imovel' do início se existir
+        $path = preg_replace('#^imovel/#', '', $fullPath);
+        
+        // Extrai o ID da URL - sempre o último segmento numérico
+        $segments = explode('/', $path);
+        $id = end($segments);
+        
+        // Remove espaços, "Not Found" e outros caracteres indesejados do ID
+        $id = trim($id);
+        $id = preg_replace('/[^0-9]/', '', $id);
+        
+        // Valida se é um número
+        if (empty($id) || !is_numeric($id)) {
+            abort(404, 'Imóvel não encontrado');
+        }
+        
+        return $this->showImovel($id);
+    }
+
+    private function showImovel($id)
     {
         $imv = Imovel::find($id);
+
+        if (!$imv) {
+            abort(404, 'Imóvel não encontrado');
+        }
 
         $img_name = 'imgr-'.sprintf("%09d", $imv->cod_bem).'.jpg';
         $url_img  = 'https://www.encontraimoveis.com.br/img/' . $img_name;
@@ -236,7 +270,7 @@ class SiteController extends Controller
             'tipo'          => (Util::getStringUTF8($imv->finalidade) == 'Locacao' ? 'LOCAÇÃO' : 'VENDA'),
             'cod_bem'       => $imv->cod_bem,
             'referencia'    => Util::formata($imv->id ,'ref'),
-            'cidade'        => Util::getStringUTF8($imv->cidade) . '/' . $imv->uf,
+            'cidade'        => Util::getStringUTF8($imv->cidade ?? '') . '/' . ($imv->uf ?? ''),
             'endereco'      => Util::getStringUTF8($imv->endereco_1),
             'endereco_2'    => Util::getStringUTF8($imv->endereco_2),
             'complemento'   => Util::getStringUTF8($imv->complemento),
@@ -254,18 +288,18 @@ class SiteController extends Controller
             'aplicacao'     => (Util::getStringUTF8($imv->aplicacao) == 'Misto' ? 'Residencial ou Comercial' : Util::getStringUTF8($imv->aplicacao)),
             'estrutura'     => Util::getStringUTF8($imv->estrutura),
             'estado'        => Util::getStringUTF8($imv->estado),
-            'valor'         => 'R$ ' . number_format($imv->vlr_oferta, 0, ',', '.'),
-            'vlr_locacao'           => 'R$ ' . number_format($imv->vlr_locacao, 0, ',', '.'),
-            'vlr_rentabilidade'     => 'R$ ' . number_format($imv->vlr_rentabilidade, 0, ',', '.'),
-            'vlr_financiamento'     => 'R$ ' . number_format($imv->vlr_financiamento, 0, ',', '.'),
-            'vlr_sld_devedor'       => 'R$ ' . number_format($imv->vlr_sld_devedor, 0, ',', '.'),
-            'vlr_direitos'          => 'R$ ' . number_format($imv->vlr_direitos, 0, ',', '.'),
-            'vlr_poupanca'          => 'R$ ' . number_format($imv->vlr_poupanca, 0, ',', '.'),
-            'vlr_parcela'           => 'R$ ' . number_format($imv->vlr_parcela, 0, ',', '.'),
-            'vlr_iptu'              => 'R$ ' . number_format($imv->vlr_iptu, 0, ',', '.'),
-            'vlr_condominio'        => 'R$ ' . number_format($imv->vlr_condominio, 0, ',', '.'),
-            'area_total'    => ($imv->area_total > 0 ? number_format($imv->area_total, 2, ',', '.') . ' m<sup>2</sup>' : null),
-            'area_util'     => ($imv->area_util > 0 ? number_format($imv->area_util, 2, ',', '.') . ' m<sup>2</sup>' : null),
+            'valor'         => 'R$ ' . number_format($imv->vlr_oferta ?? 0, 0, ',', '.'),
+            'vlr_locacao'           => 'R$ ' . number_format($imv->vlr_locacao ?? 0, 0, ',', '.'),
+            'vlr_rentabilidade'     => 'R$ ' . number_format($imv->vlr_rentabilidade ?? 0, 0, ',', '.'),
+            'vlr_financiamento'     => 'R$ ' . number_format($imv->vlr_financiamento ?? 0, 0, ',', '.'),
+            'vlr_sld_devedor'       => 'R$ ' . number_format($imv->vlr_sld_devedor ?? 0, 0, ',', '.'),
+            'vlr_direitos'          => 'R$ ' . number_format($imv->vlr_direitos ?? 0, 0, ',', '.'),
+            'vlr_poupanca'          => 'R$ ' . number_format($imv->vlr_poupanca ?? 0, 0, ',', '.'),
+            'vlr_parcela'           => 'R$ ' . number_format($imv->vlr_parcela ?? 0, 0, ',', '.'),
+            'vlr_iptu'              => 'R$ ' . number_format($imv->vlr_iptu ?? 0, 0, ',', '.'),
+            'vlr_condominio'        => 'R$ ' . number_format($imv->vlr_condominio ?? 0, 0, ',', '.'),
+            'area_total'    => ($imv->area_total && $imv->area_total > 0 ? number_format($imv->area_total, 2, ',', '.') . ' m<sup>2</sup>' : null),
+            'area_util'     => ($imv->area_util && $imv->area_util > 0 ? number_format($imv->area_util, 2, ',', '.') . ' m<sup>2</sup>' : null),
             'qtde_quartos'  => ($imv->qtde_quartos      == 0 ? '' : $imv->qtde_quartos),
             'qtde_suites'   => ($imv->qtde_suites       == 0 ? '' : $imv->qtde_suites),
             'qtde_salas'    => ($imv->qtde_salas        == 0 ? '' : $imv->qtde_salas),
@@ -273,24 +307,24 @@ class SiteController extends Controller
             'qtde_banheiro' => ($imv->qtde_banheiros    == 0 ? '' : $imv->qtde_banheiros),
             'qtde_garagens' => ($imv->qtde_garagens     == 0 ? '' : $imv->qtde_garagens),
             'qtde_aservico' => ($imv->qtde_area_servico == 0 ? '' : $imv->qtde_area_servico),
-            'anuncio'       => Util::getStringUTF8(str_replace(chr(10), '<br>', $imv->anuncio)),
-            'descr_adicional' => Util::getStringUTF8(str_replace(chr(10), '<br>', $imv->descr_adicional)),
-            'observacao1'   => Util::getStringUTF8(str_replace(chr(10), '<br>', $imv->observacao1)),
-            'observacao2'   => Util::getStringUTF8(str_replace(chr(10), '<br>', $imv->observacao2)),
-            'observacao3'   => Util::getStringUTF8(str_replace(chr(10), '<br>', $imv->observacao3)),
-            'observacao4'   => Util::getStringUTF8(str_replace(chr(10), '<br>', $imv->observacao4)),
+            'anuncio'       => Util::getStringUTF8(str_replace(chr(10), '<br>', $imv->anuncio ?? '')),
+            'descr_adicional' => Util::getStringUTF8(str_replace(chr(10), '<br>', $imv->descr_adicional ?? '')),
+            'observacao1'   => Util::getStringUTF8(str_replace(chr(10), '<br>', $imv->observacao1 ?? '')),
+            'observacao2'   => Util::getStringUTF8(str_replace(chr(10), '<br>', $imv->observacao2 ?? '')),
+            'observacao3'   => Util::getStringUTF8(str_replace(chr(10), '<br>', $imv->observacao3 ?? '')),
+            'observacao4'   => Util::getStringUTF8(str_replace(chr(10), '<br>', $imv->observacao4 ?? '')),
             'estrutura'     => Util::getStringUTF8($imv->estrutura),
-            'google_maps'   => Util::getGoogleMaps($imv->endereco_1, $imv->bairro, $imv->cidade . '-' . $imv->uf),
-            'url_amigavel'  => Util::getStringUTF8($imv->finalidade) .
-                                "+" . Util::getStringUTF8($imv->tp_bem) .
-                                "+" . Util::getStringUTF8($imv->bairro)  .
-                                "+" . Util::getStringUTF8($imv->cidade) . '-' . $imv->uf,
+            'google_maps'   => Util::getGoogleMaps($imv->endereco_1 ?? '', $imv->bairro ?? '', ($imv->cidade ?? '') . '-' . ($imv->uf ?? '')),
+            'url_amigavel'  => Util::getStringUTF8($imv->finalidade ?? '') .
+                                "+" . Util::getStringUTF8($imv->tp_bem ?? '') .
+                                "+" . Util::getStringUTF8($imv->bairro ?? '')  .
+                                "+" . Util::getStringUTF8($imv->cidade ?? '') . '-' . ($imv->uf ?? ''),
         ];
 
 
         $imovel['whatsapp'] = $this->getUrlWhatsApp($imovel);
 
-        $string_benf = Util::getStringUTF8($imv->benfeitorias);
+        $string_benf = Util::getStringUTF8($imv->benfeitorias ?? '');
         $aBenf = $this->trataBenfeitoria($string_benf);
         $aBenf = explode(',', $aBenf);
 
@@ -347,7 +381,7 @@ class SiteController extends Controller
                     'tipo'          => (Util::getStringUTF8($imv->finalidade) == 'Locacao' ? 'LOCAÇÃO' : 'VENDA'),
                     'cod_bem'       => $imv->cod_bem,
                     'referencia'    => Util::formata($imv->id ,'ref'),
-                    'cidade'        => Util::getStringUTF8($imv->cidade) . '/' . $imv->uf,
+                    'cidade'        => Util::getStringUTF8($imv->cidade ?? '') . '/' . ($imv->uf ?? ''),
                     'endereco'      => Util::getStringUTF8($imv->endereco_1),
                     'endereco_2'   => Util::getStringUTF8($imv->endereco_2),
                     'complemento'   => Util::getStringUTF8($imv->complemento),
@@ -365,18 +399,18 @@ class SiteController extends Controller
                     'aplicacao'     => (Util::getStringUTF8($imv->aplicacao) == 'Misto' ? 'Residencial ou Comercial' : Util::getStringUTF8($imv->aplicacao)),
                     'estrutura'     => Util::getStringUTF8($imv->estrutura),
                     'estado'        => Util::getStringUTF8($imv->estado),
-                    'valor'         => 'R$ ' . number_format($imv->vlr_oferta, 0, ',', '.'),
-                    'vlr_locacao'           => 'R$ ' . number_format($imv->vlr_locacao, 0, ',', '.'),
-                    'vlr_rentabilidade'     => 'R$ ' . number_format($imv->vlr_rentabilidade, 0, ',', '.'),
-                    'vlr_financiamento'     => 'R$ ' . number_format($imv->vlr_financiamento, 0, ',', '.'),
-                    'vlr_sld_devedor'       => 'R$ ' . number_format($imv->vlr_sld_devedor, 0, ',', '.'),
-                    'vlr_direitos'          => 'R$ ' . number_format($imv->vlr_direitos, 0, ',', '.'),
-                    'vlr_poupanca'          => 'R$ ' . number_format($imv->vlr_poupanca, 0, ',', '.'),
-                    'vlr_parcela'           => 'R$ ' . number_format($imv->vlr_parcela, 0, ',', '.'),
-                    'vlr_iptu'              => 'R$ ' . number_format($imv->vlr_iptu, 0, ',', '.'),
-                    'vlr_condominio'        => 'R$ ' . number_format($imv->vlr_condominio, 0, ',', '.'),
-                    'area_total'    => ($imv->area_total > 0 ? number_format($imv->area_total, 2, ',', '.') . ' m<sup>2</sup>' : null),
-                    'area_util'     => ($imv->area_util > 0 ? number_format($imv->area_util, 2, ',', '.') . ' m<sup>2</sup>' : null),
+                    'valor'         => 'R$ ' . number_format($imv->vlr_oferta ?? 0, 0, ',', '.'),
+                    'vlr_locacao'           => 'R$ ' . number_format($imv->vlr_locacao ?? 0, 0, ',', '.'),
+                    'vlr_rentabilidade'     => 'R$ ' . number_format($imv->vlr_rentabilidade ?? 0, 0, ',', '.'),
+                    'vlr_financiamento'     => 'R$ ' . number_format($imv->vlr_financiamento ?? 0, 0, ',', '.'),
+                    'vlr_sld_devedor'       => 'R$ ' . number_format($imv->vlr_sld_devedor ?? 0, 0, ',', '.'),
+                    'vlr_direitos'          => 'R$ ' . number_format($imv->vlr_direitos ?? 0, 0, ',', '.'),
+                    'vlr_poupanca'          => 'R$ ' . number_format($imv->vlr_poupanca ?? 0, 0, ',', '.'),
+                    'vlr_parcela'           => 'R$ ' . number_format($imv->vlr_parcela ?? 0, 0, ',', '.'),
+                    'vlr_iptu'              => 'R$ ' . number_format($imv->vlr_iptu ?? 0, 0, ',', '.'),
+                    'vlr_condominio'        => 'R$ ' . number_format($imv->vlr_condominio ?? 0, 0, ',', '.'),
+                    'area_total'    => ($imv->area_total && $imv->area_total > 0 ? number_format($imv->area_total, 2, ',', '.') . ' m<sup>2</sup>' : null),
+                    'area_util'     => ($imv->area_util && $imv->area_util > 0 ? number_format($imv->area_util, 2, ',', '.') . ' m<sup>2</sup>' : null),
                     'qtde_quartos'  => ($imv->qtde_quartos      == 0 ? '' : $imv->qtde_quartos),
                     'qtde_suites'   => ($imv->qtde_suites       == 0 ? '' : $imv->qtde_suites),
                     'qtde_salas'    => ($imv->qtde_salas        == 0 ? '' : $imv->qtde_salas),
@@ -385,23 +419,23 @@ class SiteController extends Controller
                     'qtde_garagens' => ($imv->qtde_garagens     == 0 ? '' : $imv->qtde_garagens),
                     'qtde_aservico' => ($imv->qtde_area_servico == 0 ? '' : $imv->qtde_area_servico),
                     'dt_reserva'    => $imv->dt_reserva,
-                    'anuncio'       => Util::getStringUTF8(str_replace(chr(10), '<br>', $imv->anuncio)),
-                    'descr_adicional' => Util::getStringUTF8(str_replace(chr(10), '<br>', $imv->descr_adicional)),
-                    'observacao1'   => Util::getStringUTF8(str_replace(chr(10), '<br>', $imv->observacao1)),
-                    'observacao2'   => Util::getStringUTF8(str_replace(chr(10), '<br>', $imv->observacao2)),
-                    'observacao3'   => Util::getStringUTF8(str_replace(chr(10), '<br>', $imv->observacao3)),
-                    'observacao4'   => Util::getStringUTF8(str_replace(chr(10), '<br>', $imv->observacao4)),
+                    'anuncio'       => Util::getStringUTF8(str_replace(chr(10), '<br>', $imv->anuncio ?? '')),
+                    'descr_adicional' => Util::getStringUTF8(str_replace(chr(10), '<br>', $imv->descr_adicional ?? '')),
+                    'observacao1'   => Util::getStringUTF8(str_replace(chr(10), '<br>', $imv->observacao1 ?? '')),
+                    'observacao2'   => Util::getStringUTF8(str_replace(chr(10), '<br>', $imv->observacao2 ?? '')),
+                    'observacao3'   => Util::getStringUTF8(str_replace(chr(10), '<br>', $imv->observacao3 ?? '')),
+                    'observacao4'   => Util::getStringUTF8(str_replace(chr(10), '<br>', $imv->observacao4 ?? '')),
                     'estrutura'     => Util::getStringUTF8($imv->estrutura),
-                    'google_maps'   => Util::getGoogleMaps($imv->endereco_1, $imv->bairro, $imv->cidade . '-' . $imv->uf),
-                    'url_amigavel'  => Util::getStringUTF8($imv->finalidade) .
-                                        "+" . Util::getStringUTF8($imv->tp_bem) .
-                                        "+" . Util::getStringUTF8($imv->bairro)  .
-                                        "+" . Util::getStringUTF8($imv->cidade) . '-' . $imv->uf,
+                    'google_maps'   => Util::getGoogleMaps($imv->endereco_1 ?? '', $imv->bairro ?? '', ($imv->cidade ?? '') . '-' . ($imv->uf ?? '')),
+                    'url_amigavel'  => Util::getStringUTF8($imv->finalidade ?? '') .
+                                        "+" . Util::getStringUTF8($imv->tp_bem ?? '') .
+                                        "+" . Util::getStringUTF8($imv->bairro ?? '')  .
+                                        "+" . Util::getStringUTF8($imv->cidade ?? '') . '-' . ($imv->uf ?? ''),
             ];
 
             $imoveis[$i]['whatsapp'] = $this->getUrlWhatsApp($imoveis[$i]);
 
-            $string_benf = Util::getStringUTF8($imv->benfeitorias);
+            $string_benf = Util::getStringUTF8($imv->benfeitorias ?? '');
             $qtde = $this->contBenfeitoria($string_benf);
 
             foreach ($qtde as $key => $qtd) {
