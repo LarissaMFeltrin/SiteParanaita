@@ -4,14 +4,14 @@
             <div class="swiper-slide">
                 <div class="hero-slide" style="background-image: url('{{ asset('images/carrosel/carrosel2.jpeg') }}');"></div>
             </div>
-            <div class="swiper-slide">
+            <!-- <div class="swiper-slide">
                 <div class="hero-slide" style="background-image: url('{{ asset('images/carrosel/carrosel3.jpeg') }}');"></div>
-            </div>
+            </div> -->
             <div class="swiper-slide">
                 <div class="hero-slide" style="background-image: url('{{ asset('images/carrosel/carrosel4.jpeg') }}');"></div>
             </div>
             <div class="swiper-slide">
-                <div class="hero-slide" style="background-image: url('{{ asset('images/carrosel/marialvaigreja.jpg') }}');"></div>
+                <div class="hero-slide" style="background-image: url('{{ asset('images/carrosel/marialvauva.jpg') }}');"></div>
             </div>
         </div>
         <div class="swiper-pagination"></div>

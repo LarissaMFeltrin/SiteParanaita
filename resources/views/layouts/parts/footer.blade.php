@@ -5,7 +5,7 @@
         <div class="row p-3">
           <div class="col-lg-4 col-md-6">
             <div class="footer-info">
-                <img src="{{ asset('images/LogoImobCCreci.png') }}" alt="" class="img-fluid" style="max-width: 180px">
+                <img src="{{ asset('images/logoParanaitaBranca.png') }}" alt="" class="img-fluid" style="max-width: 180px">
                 <a href="https://goo.gl/maps/WgcAi1HnHXeurZEA6"
                 target="_"
                 style="color: #fff;">
