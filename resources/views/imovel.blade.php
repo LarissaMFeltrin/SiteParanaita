@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('main')
-<div class="container" style="margin-top: 100px;">
+<div class="container" style="margin-top: 120px;">
     <section id="contact" class="contact">
         <div class="container">
-            <div class="roe">
+            <div class="roe" style="margin-bottom: 30px;">
                 <h4>Ref.:  {{ $imovel['tp_bem'] . ' - ' . $imovel['cidade'] }}</h4>
             </div>
         </div>
@@ -45,7 +45,7 @@
             </div>
         </div>
         -->
-        <div class="container">
+        <div class="container" style="margin-top: 20px;">
             <div class="row">
                 <div class="col-md-6 col-sm-12 mb-2">
                     <ul id="imageGallery">
@@ -92,13 +92,13 @@
                     @endif
 
                     <br>
-                    <span style="color: red;">
+                   <!-- <span style="color: red;">
                         @if ($imovel['finalidade'] == 'Locacao')
                             Atenção: O Valor do imóvel está bonificado. A disponibilidade e os valores dos imóveis estão sujeitos a alteração sem aviso prévio.
                         @else
                             Atenção: A disponibilidade e os valores dos imóveis estão sujeitos a alteração sem aviso prévio.
                         @endif
-                    </span>
+                    </span>-->
                 </div>
             </div>
         </div>
@@ -226,7 +226,7 @@
     background-position: 0px top;
 }
 #main{
-    margin-top: 230px !important;
+    margin-top: 250px !important;
 }
 #imageGallery{
     max-height: 430px !important;

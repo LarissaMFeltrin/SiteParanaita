@@ -3,7 +3,7 @@
 
       <!--<h1 class="logo"><a href="index.html">Dewi</a></h1>-->
         <a href="{{ route('index') }}" class="logo">
-          <img src="{{ asset('images/logoParanaitaBrancaCreci.png') }}" alt="" class="img-fluid">
+          <img src="{{ asset('images/logoParanaitaBrancaCreci2.png') }}" alt="" class="img-fluid">
         </a>
 
       <nav id="navbar" class="navbar">
