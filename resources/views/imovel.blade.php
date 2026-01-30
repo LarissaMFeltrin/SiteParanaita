@@ -103,13 +103,22 @@
             </div>
         </div>
         <div class="container mt-3 p-4">
+            @if(!empty($imovel['anuncio']) || !empty($imovel['descr_adicional']))
             <div class="row bg-light border p-3 mb-5 d-flex align-items-center">
                 <div class="col-12">
+                    @if(!empty($imovel['anuncio']))
+                    <p class="text-justify mb-3">
+                        {!! $imovel['anuncio'] !!}
+                    </p>
+                    @endif
+                    @if(!empty($imovel['descr_adicional']))
                     <p class="text-justify">
                         {!! $imovel['descr_adicional'] !!}
                     </p>
+                    @endif
                 </div>
             </div>
+            @endif
             <div class="row mb-5">
                 <div class="col-12">
                     <h4>Características</h4>
